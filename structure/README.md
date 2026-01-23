@@ -57,3 +57,4 @@ Changes to the structure definition are rare and deliberate.
 If structure changes frequently, it is a signal that
 the underlying concepts are not yet stable
 and should remain in documentation instead.
+npm run 

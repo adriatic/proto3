@@ -1,48 +1,21 @@
-# Scripts
+## Running Proto3 (Fake Supervisor UI)
 
-This directory contains scripts that support the structure and integrity
-of the PACT repository.
+### 1. Install dependencies
 
-Scripts in this directory are intentionally limited in scope.
+npm install
+npm install --save-dev electron
+npm install --save-dev @types/react @types/react-dom
 
----
+### 2. Generate repository structure
 
-## What Scripts Are Allowed to Do
+Dry-run (no changes):
 
-Scripts may:
-- Create missing directories
-- Create placeholder files
-- Validate repository structure
-- Make drift visible
+node scripts/gen-structure.js
 
-Scripts must be:
-- Safe by default
-- Explicit in behavior
-- Idempotent
+Apply (create missing files):
 
----
+node scripts/gen-structure.js --apply
 
-## What Scripts Are Not Allowed to Do
+### 3. Start the application
 
-Scripts must not:
-- Overwrite existing files
-- Delete files or directories
-- Build or run applications
-- Install dependencies
-- Modify code behavior
-
-If a script can cause irreversible change,
-it does not belong here.
-
----
-
-## Philosophy
-
-Automation in PACT exists to:
-- Reduce accidental mistakes
-- Increase confidence
-- Preserve intent
-
-Automation does not exist to be clever or convenient.
-
-When in doubt, the system should ask a human to decide.
+npm run start

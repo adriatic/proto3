@@ -13,8 +13,51 @@
  * - Idempotent
  */
 
+
 const fs = require("fs");
 const path = require("path");
+
+function fail(msg) {
+  console.error(`❌ gen-structure: ${msg}`);
+  process.exit(1);
+}
+
+function validateElectronSetup(projectRoot) {
+  const pkgPath = path.join(projectRoot, "package.json");
+  if (!fs.existsSync(pkgPath)) {
+    fail("package.json not found at project root");
+  }
+
+  const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf8"));
+
+  if (!pkg.main) {
+    fail(`package.json is missing "main" (expected something like "electron/main.js")`);
+  }
+
+  const mainPath = path.join(projectRoot, pkg.main);
+  if (!fs.existsSync(mainPath)) {
+    fail(`Electron main entry not found: ${pkg.main}`);
+  }
+
+  let electronInstalled = false;
+  try {
+    require.resolve("electron", { paths: [projectRoot] });
+    electronInstalled = true;
+  } catch (_) {}
+
+  if (!electronInstalled) {
+    fail(`Electron is not installed (npm install --save-dev electron)`);
+  }
+
+  console.log("✅ Electron setup validated");
+}
+
+// --- run validation before doing anything else ---
+const projectRoot = path.resolve(__dirname, "..");
+validateElectronSetup(projectRoot);
+
+// existing gen-structure logic continues below…
+
 
 const ROOT = process.cwd();
 const STRUCTURE_FILE = path.join(ROOT, "structure", "pact.structure.json");

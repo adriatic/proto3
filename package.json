@@ -1,0 +1,22 @@
+{
+  "name": "pact-proto3",
+  "version": "0.0.1",
+  "main": "electron/main.js",
+  "scripts": {
+    "react": "vite",
+    "electron": "electron .",
+    "check-env": "node scripts/check-env.js",
+    "start": "npm run check-env && electron .",
+    "dev:electron": "node scripts/dev-electron.js"
+  },
+  "dependencies": {
+    "electron": "^40.0.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "vite": "^7.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.9",
+    "@types/react-dom": "^19.2.3"
+  }
+}

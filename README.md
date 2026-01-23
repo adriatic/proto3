@@ -62,3 +62,117 @@ Start with:
 You should understand **why PACT exists** before you see how it is implemented.
 
 That ordering is intentional.
+
+## Development: Running & Stopping the App (React + Electron)
+
+This project runs two coordinated processes in development:
+
+Vite / React – the renderer (UI)
+
+Electron – the desktop host (main process)
+
+They are supervised so they can be started and stopped deterministically.
+
+### Prerequisites
+
+From the project root: `npm install`
+
+### Starting the app (recommended way): `npm run dev`
+
+This does the following:
+
+- Starts the Vite dev server (React)
+
+- Waits until http://localhost:5173 is available
+
+- Starts Electron, loading the Vite dev server
+
+- Keeps both processes under a single supervisor
+
+You should see:
+
+- Vite logs in the terminal
+
+- An Electron window opening with the React UI
+
+### Stopping the app (clean shutdown)
+
+There are two correct ways to stop the app.
+
+#### Option 1 — Close the Electron window (preferred)
+
+- Close the Electron GUI window
+
+- Electron quits deterministically
+
+- The supervising Node process exits
+
+- Control returns to the terminal
+
+This is the normal shutdown path and does not rely on signals or terminal focus.
+
+#### Option 2 — Ctrl-C in the terminal (fallback)
+
+1. Make sure the terminal window has focus
+
+2. Press Ctrl-C
+
+Result:
+
+- The supervisor receives SIGINT
+
+- Electron is terminated cleanly
+
+- Vite is stopped
+
+- Terminal prompt returns
+
+Note: Ctrl-C is a fallback mechanism. The app is designed to shut down cleanly when the Electron window is closed.
+
+### ⚠️ What not to do
+
+- ❌ Do not hunt for PIDs
+
+- ❌ Do not use killall Electron
+
+- ❌ Do not rely on Activity Monitor
+
+- ❌ Do not leave Electron running headless
+
+If shutdown does not behave as described above, it is a bug and should be fixed in the supervisor or lifecycle code.
+
+### 🔍 Running components individually (advanced / debugging)
+#### React (Vite) only
+`npm run dev:vite`
+
+
+Starts the renderer at:
+
+`http://localhost:5173`
+
+
+No Electron window is involved.
+
+#### Electron only (expects Vite already running)
+`npm run dev:electron`
+
+
+Use this only if:
+
+- Vite is already running
+
+- You are debugging Electron behavior specifically
+
+### 🧠 Design note (important)
+
+This project intentionally avoids:
+
+- detached Electron processes
+
+- OS-specific lifecycle conventions
+
+- reliance on terminal focus for correctness
+
+The Electron app **always quits** when its window is closed, regardless of platform.
+
+

@@ -1,0 +1,20 @@
+{
+  "dirs": [
+    "electron",
+    "src",
+    "src/supervisor",
+    "src/ui",
+    "scripts",
+    "structure"
+  ],
+  "files": {
+    "README.md": "# Proto3 – PACT Supervisor UI (Fake)\n\nThis repository exists to exercise the PACT Supervisor model via a minimal UI.\n",
+    "electron/main.js": "",
+    "src/App.tsx": "",
+    "src/index.tsx": "",
+    "src/supervisor/FakeSupervisor.ts": "",
+    "src/ui/SupervisorStatePanel.tsx": "",
+    "scripts/gen-structure.js": "",
+    "structure/proto3.structure.json": ""
+  }
+}
