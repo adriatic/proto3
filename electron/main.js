@@ -97,6 +97,16 @@ ipcMain.handle("ping-main", async (_evt, payload) => {
   return { ok: true, from: "main", at: Date.now() };
 });
 
+ipcMain.on("supervisor:renderer-log", (_evt, entry) => {
+  if (!mainWindow || mainWindow.isDestroyed()) return;
+
+  mainWindow.webContents.send("supervisor:log", {
+    ...entry,
+    source: "renderer",
+    ts: entry.ts ?? Date.now(),
+  });
+});
+
 app.whenReady().then(createWindow);
 
 /**

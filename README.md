@@ -175,4 +175,40 @@ This project intentionally avoids:
 
 The Electron app **always quits** when its window is closed, regardless of platform.
 
+┌──────────────────────────────────────────┐
+│              Electron Main               │
+│                                          │
+│  win.loadURL("http://localhost:5173")    │
+│               │                          │
+│               ▼                          │
+│        Vite Dev Server (5173)             │
+└────────────────┬─────────────────────────┘
+                 │ HTTP
+                 ▼
+┌──────────────────────────────────────────┐
+│              index.html                  │
+│                                          │
+│  <div id="root"></div>                   │
+│  (static, no JS logic)                   │
+└────────────────┬─────────────────────────┘
+                 │
+                 ▼
+┌──────────────────────────────────────────┐
+│              index.tsx                   │
+│                                          │
+│  ReactDOM.createRoot(...).render(<App />)│
+│  (bootstrap only, runs once)             │
+└────────────────┬─────────────────────────┘
+                 │
+                 ▼
+┌──────────────────────────────────────────┐
+│                <App />                   │
+│                                          │
+│  - Renderer session starts               │
+│  - Session-level effects                 │
+│  - Correct place for:                    │
+│      rendererLog("Renderer mounted")     │
+│                                          │
+│  Child components mount below this       │
+└──────────────────────────────────────────┘
 

@@ -1,6 +1,13 @@
+import { useEffect } from "react";
+import { rendererLog } from "./supervisor/rendererLog";
 import { SupervisorLogPanel } from "./supervisor/SupervisorLogPanel";
 
 export function App() {
+  
+  useEffect(() => {
+    rendererLog("info", "Renderer mounted");
+  }, []);
+
   return (
     <div style={{ display: "grid", gridTemplateColumns: "300px 1fr", height: "100vh" }}>
       <aside style={{ borderRight: "1px solid #ddd", padding: 12, overflow: "auto" }}>

@@ -4,6 +4,7 @@ export interface SupervisorLog {
   ts: number;
   level: "info" | "warn" | "error";
   message: string;
+  source: "main" | "renderer" | "supervisor";
   meta?: Record<string, unknown>;
 }
 

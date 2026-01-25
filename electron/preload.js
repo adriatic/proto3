@@ -6,4 +6,8 @@ contextBridge.exposeInMainWorld("supervisor", {
       handler(payload);
     });
   },
+
+  logFromRenderer: (entry) => {
+    ipcRenderer.send("supervisor:renderer-log", entry);
+  },
 });
