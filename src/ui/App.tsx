@@ -1,14 +1,14 @@
-export function App() {
-  const ping = async () => {
-    const res = await (window as any).api.pingMain({ hello: "renderer" });
-    console.log("[renderer] reply:", res);
-    alert("IPC OK — check terminal & DevTools console");
-  };
+import { SupervisorLogPanel } from "./supervisor/SupervisorLogPanel";
 
+export function App() {
   return (
-    <div style={{ padding: 24, fontFamily: "system-ui" }}>
-      <h1>PACT Proto3</h1>
-      <button onClick={ping}>Ping main</button>
+    <div style={{ display: "grid", gridTemplateColumns: "300px 1fr", height: "100vh" }}>
+      <aside style={{ borderRight: "1px solid #ddd", padding: 12, overflow: "auto" }}>
+        <SupervisorLogPanel />
+      </aside>
+      <main style={{ padding: 24 }}>
+        <h2>Workspace</h2>
+      </main>
     </div>
   );
 }

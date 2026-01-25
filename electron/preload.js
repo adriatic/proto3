@@ -1,5 +1,9 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
-contextBridge.exposeInMainWorld("api", {
-  pingMain: (payload) => ipcRenderer.invoke("ping-main", payload),
+contextBridge.exposeInMainWorld("supervisor", {
+  onLog: (handler) => {
+    ipcRenderer.on("supervisor:log", (_evt, payload) => {
+      handler(payload);
+    });
+  },
 });
