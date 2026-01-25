@@ -8,12 +8,27 @@ const electronBin = path.join(
   "..",
   "node_modules",
   ".bin",
-  "electron"
+  "electron",
 );
 
 const child = spawn(electronBin, ["."], {
-  stdio: "inherit",
+  stdio: ["pipe", "inherit", "inherit"],
 });
+
+supLog("info", "Electron process spawned");
+
+function supLog(level, message, meta = {}) {
+  const entry = {
+    source: "supervisor",
+    level,
+    message,
+    meta,
+    ts: Date.now(),
+  };
+
+  // Write to Electron stdin as a line-delimited protocol
+  child.stdin.write(`__SUP_LOG__ ${JSON.stringify(entry)}\n`);
+}
 
 /**
  * Tracks whether the supervisor (this script)
@@ -37,12 +52,14 @@ const shutdown = () => {
  */
 child.on("exit", (code, signal) => {
   if (supervisorInitiated) {
+    supLog("info", "Electron terminated by supervisor", { code, signal });
     console.log(
-      `🧹 Electron terminated by supervisor (code=${code}, signal=${signal ?? "none"})`
+      `🧹 Electron terminated by supervisor (code=${code}, signal=${signal ?? "none"})`,
     );
   } else {
+    supLog("info", "Electron exited on its own", { code, signal });
     console.log(
-      `🧹 Electron exited on its own (code=${code}, signal=${signal ?? "none"})`
+      `🧹 Electron exited on its own (code=${code}, signal=${signal ?? "none"})`,
     );
   }
 
