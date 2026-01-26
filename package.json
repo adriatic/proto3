@@ -3,11 +3,10 @@
   "version": "0.0.1",
   "main": "electron/main.js",
   "scripts": {
-  "react": "vite",
-  "dev:electron": "node scripts/dev-electron.js",
-
-  "dev": "concurrently -k -n REACT,ELECTRON \"npm run react\" \"wait-on http://localhost:5173 && npm run dev:electron\""
-},
+    "react": "vite",
+    "dev:electron": "node scripts/dev-electron.js",
+    "dev": "concurrently -k -n REACT,ELECTRON \"npm run react\" \"wait-on http://localhost:5173 && npm run dev:electron\""
+  },
   "dependencies": {
     "electron": "^40.0.0",
     "react": "^19.2.3",
@@ -17,6 +16,7 @@
   "devDependencies": {
     "@types/react": "^19.2.9",
     "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.2",
     "concurrently": "^9.2.1",
     "wait-on": "^9.0.3"
   }

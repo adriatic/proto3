@@ -1,6 +1,9 @@
 // src/ui/index.tsx
+
 import { createRoot } from "react-dom/client";
 import { App } from "./ui/App";
+
+console.log("index.tsx loaded");
 
 const container = document.getElementById("root");
 
