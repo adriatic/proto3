@@ -2,17 +2,21 @@ import { useEffect, useRef } from "react";
 import { rendererLog } from "./supervisor/rendererLog";
 import { SupervisorLogPanel } from "./supervisor/SupervisorLogPanel";
 import { ProjectView } from "./project/ProjectView";
+import { IdentityPanel } from "@/ui/identity/IdentityPanel";
 
-console.log("App module loaded");
 
 export function App() {
   // ✅ hooks live INSIDE the component
   const contextDetected = useRef(false);
 
-  console.log("App render");
-
   useEffect(() => {
+    const identity = window.pact.getIdentity();
+
     rendererLog("info", "Renderer mounted");
+    rendererLog("info", "PACT identity loaded", {
+      userId: identity.userId,
+      displayName: identity.displayName,
+    });
   }, []);
 
   return (
@@ -24,6 +28,7 @@ export function App() {
       }}
     >
       <aside style={{ borderRight: "1px solid #ddd", padding: 12, overflow: "auto" }}>
+        <IdentityPanel/>
         <SupervisorLogPanel />
       </aside>
       <main style={{ padding: 24 }}>

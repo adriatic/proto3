@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "rootDir": "electron",
+    "module": "CommonJS",
+    "target": "ES2020",
+    "types": ["node", "electron"],
+
+    "allowJs": true,
+    "checkJs": false,
+
+    "noEmit": true,
+    "strict": false,
+    "skipLibCheck": true
+  },
+  "include": [
+    "electron/main.js",
+    "electron/preload.js"
+  ],
+  "exclude": [
+    "**/*.ts",
+    "src",
+    "shared",
+    "node_modules"
+  ]
+}
